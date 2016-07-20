@@ -17,7 +17,28 @@ mp = mercadopago.MP("8345175340580712", "4BZspfgSwHIcopc3dbPlr2cmHXZMgeLS")
 #print 'Argument list', str(sys.argv[1])
 
 
+#create socket
+serversocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+print 'socket created'
+#Para q no me diga "adress already in use"
+serversocket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+#bind the socket to a public host
+serversocket.bind(('', 8001))
+print "socket bind complete"
+#become a server socket
+serversocket.listen(5)
+print "socket now listening..."
 
+
+while True:
+
+	#accept connections
+	(clientsocket, address) = serversocket.accept()
+	print 'Got connection from', address
+
+	#Recibo el pedido
+
+	linea = clientsocket.recv(1024)
 
 if str(sys.argv[1]) == "user":
 	#DATOS DEL USUARIO
